@@ -2,7 +2,7 @@
 # use this code as a template to create pre-determined paths using known chassis forward velocity (x dot) in m/s, 
 # chassis angular velocity (theta dot) in rad/s, and motion duration in sec for each motion to create the path
 
-import L1_log as log
+import L1_log as log3
 import math
 import L2_inverse_kinematics as ik
 import L2_speed_control as sc
@@ -37,4 +37,6 @@ for  count, motion in enumerate(motions):
     print("Motion: ", count+1, "\t Chassis Forward Velocity (m/s): {:.2f} \t Chassis Angular Velocity (rad/s): {:.2f} \t Duration (sec): {:.2f}".format(motion[0], motion[1], motion[2]))
     wheel_speeds = ik.getPdTargets(motion[:2])                  # take the forward speed(m/s) and turning speed(rad/s) and use inverse kinematics to deterimine wheel speeds
     sc.driveOpenLoop(wheel_speeds)                              # take the calculated wheel speeds and use them to run the motors
+    log3.tmpFile(motion[0], "velocity")
+    log3.tmpFile(motion[1], "angular")
     sleep(motion[2])                                            # wait the motion duration
